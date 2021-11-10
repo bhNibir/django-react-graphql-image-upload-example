@@ -10,9 +10,13 @@ class UserProfileType(DjangoObjectType):
         model = UserProfile
         fields = ("id", "name", "avatar")
 
+    avatar_url = graphene.String()
 
+    def resolve_avatar_url(self, info):        
+        return info.context.build_absolute_uri(self.avatar.url)
 class Query(graphene.ObjectType):
     all_users = graphene.List(UserProfileType)
+
    
     def resolve_all_users(root, info):
         return UserProfile.objects.all()

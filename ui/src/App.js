@@ -13,10 +13,10 @@ function App() {
     <div className="App">
       <UploadFile/>
     {
-      data.allUsers.map(({id, name, avatar}) =>
+      data.allUsers.map(({id, name, avatarUrl}) =>
       <div key={id}>
         <p>{name}</p>
-        <pre>{avatar}</pre>
+        <img src={avatarUrl} alt=""/>
       </div>
       )
     } 
@@ -24,11 +24,12 @@ function App() {
   );
 }
 
-const All_USERS = gql`
+export const All_USERS = gql`
   query GetAllUsers {
     allUsers {
       id
       name
+      avatarUrl
     }
   }
 `;

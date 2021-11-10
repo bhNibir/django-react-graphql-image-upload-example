@@ -1,6 +1,6 @@
 import { useMutation, gql } from '@apollo/client';
 import { useState } from 'react';
-import { GET_PHOTOS_QUERY } from './Files';
+import { All_USERS } from '../App';
 
 const SINGLE_UPLOAD_MUTATION = gql`
 mutation CreateUserProfile(
@@ -40,7 +40,7 @@ const UploadFile = () => {
     try {
       const res = await uploadRequest({
         variables: { "name": userName, "avatar":selectedFile },
-        // refetchQueries: [{ query: GET_PHOTOS_QUERY }],
+        refetchQueries: [{ query: All_USERS }],
       });
       if (res.data) {
         setMsg('File upload!');
@@ -65,12 +65,12 @@ const UploadFile = () => {
 			<input type="file" name="file" onChange={changeHandler} />
 			{isFilePicked ? (
 				<div>
-					<p>Filename: {selectedFile.name}</p>
-					<p>Filetype: {selectedFile.type}</p>
-					<p>Size in bytes: {selectedFile.size}</p>
+					<p>Filename: {selectedFile?.name}</p>
+					<p>Filetype: {selectedFile?.type}</p>
+					<p>Size in bytes: {selectedFile?.size}</p>
 					<p>
 						lastModifiedDate:{' '}
-						{selectedFile.lastModifiedDate.toLocaleDateString()}
+						{selectedFile?.lastModifiedDate?.toLocaleDateString()}
 					</p>
 				</div>
 			) : (
